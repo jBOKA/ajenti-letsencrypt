@@ -6,6 +6,10 @@
             <textbox bind="basedir"/>
           </formline>
 
+          <formline text="Certbot bin">
+            <textbox bind="certbot"/>
+          </formline>
+
           <formline text="Wellknown">
             <textbox bind="wellknown"/>
           </formline>
