@@ -26,12 +26,13 @@ class Settings (object):
           osx='/opt/local/etc/letsencrypt.sh/',
       )
 
+      self.certbot = '/usr/local/bin/certbot'
       self.wellknown = '/var/www/letsencrypt.sh/'
       self.domains = 'example.com sub.example.com'
       self.cronjob = False
       self.cronfile = 'letsencrypt'
       self.results = ''
-      self.domainfile = 'domains.txt'
+      self.domainfile = 'letsencrypt-domains.txt'
       self.nginx_config = '00_letsencrypt.conf'
 
 @plugin
@@ -119,23 +120,23 @@ class LetsEncryptPlugin (SectionPlugin):
         	os.makedirs(self.settings.wellknown)
     		os.chown(self.settings.wellknown, uid, gid)
 
-    def create_custom_config(self):
-        template = """
-        BASEDIR=$basedir
-        WELLKNOWN=$wellknown
-        """
-        dict = {
-            'basedir': self.settings.basedir,
-            'wellknown': self.settings.wellknown
-        }
+    # def create_custom_config(self):
+    #     template = """
+    #     BASEDIR=$basedir
+    #     WELLKNOWN=$wellknown
+    #     """
+    #     dict = {
+    #         'basedir': self.settings.basedir,
+    #         'wellknown': self.settings.wellknown
+    #     }
 
-        filename = 'config'
-        filepath = self.settings.basedir + filename
-        file = open(filepath, 'w')
-        src = Template( template )
-        if file.write(src.safe_substitute(dict)) is not None:
-            self.context.notify('info', 'Letsencrypt error')
-        file.close()
+    #     filename = 'config'
+    #     filepath = self.settings.basedir + filename
+    #     file = open(filepath, 'w')
+    #     src = Template( template )
+    #     if file.write(src.safe_substitute(dict)) is not None:
+    #         self.context.notify('info', 'Letsencrypt error')
+    #     file.close()
 
     def create_wellknown(self):
         if not self.check_nginx_custom_dir():
@@ -212,7 +213,7 @@ server {
         if not self.has_domains:
             return
 
-        self.create_custom_config()
+        # self.create_custom_config()
         self.create_wellknown()
 
         if self.settings.cronjob:
