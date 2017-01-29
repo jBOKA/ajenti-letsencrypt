@@ -18,7 +18,7 @@ from pprint import pprint
 class Settings (object):
    def __init__(self):
       self.basedir = platform_select(
-          debian='/etc/letsencrypt.sh/',
+          debian='/etc/ajenti/',
           centos='/etc/letsencrypt.sh/',
           mageia='/etc/letsencrypt.sh/',
           freebsd='/usr/local/etc/letsencrypt.sh/',
@@ -215,12 +215,14 @@ server {
         self.binder.update()
     	self.binder.populate()
         self.create_folders()
+        self.context.notify('info', 'Writing wellknown config: '+self.settings.nginx_config_dir+self.settings.nginx_config)
         self.write_domain_file()
 
         if not self.has_domains:
             return
 
         # self.create_custom_config()
+        self.context.notify('info', 'Creating wellknown root folder: '+self.settings.wellknown)
         self.create_wellknown()
 
         if self.settings.cronjob:
