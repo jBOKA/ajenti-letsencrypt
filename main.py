@@ -121,24 +121,6 @@ class LetsEncryptPlugin (SectionPlugin):
         	os.makedirs(self.settings.wellknown)
     		os.chown(self.settings.wellknown, uid, gid)
 
-    # def create_custom_config(self):
-    #     template = """
-    #     BASEDIR=$basedir
-    #     WELLKNOWN=$wellknown
-    #     """
-    #     dict = {
-    #         'basedir': self.settings.basedir,
-    #         'wellknown': self.settings.wellknown
-    #     }
-
-    #     filename = 'config'
-    #     filepath = self.settings.basedir + filename
-    #     file = open(filepath, 'w')
-    #     src = Template( template )
-    #     if file.write(src.safe_substitute(dict)) is not None:
-    #         self.context.notify('info', 'Letsencrypt error')
-    #     file.close()
-
     def create_wellknown(self):
         if not self.check_nginx_custom_dir():
             return False
@@ -160,6 +142,7 @@ server {
         filepath = self.nginx_config_dir + '/' + self.settings.nginx_config
         file = open(filepath, 'w')
         src = Template( template )
+        self.context.notify('info', 'Creating wellknown root folder: '+self.settings.wellknown)
         if file.write(src.safe_substitute(dict)) is not None:
             self.context.notify('info', 'WELLKNOWN config write error')
         file.close()
@@ -221,8 +204,6 @@ server {
         if not self.has_domains:
             return
 
-        # self.create_custom_config()
-        self.context.notify('info', 'Creating wellknown root folder: '+self.settings.wellknown)
         self.create_wellknown()
 
         if self.settings.cronjob:
