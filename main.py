@@ -129,7 +129,7 @@ class LetsEncryptPlugin (SectionPlugin):
 server {
     server_name $domains;
     listen *:80;
-    location ^~ $location {
+    location ^~ ${location}/(.+) {
         alias $alias;
         default_type "text/plain";
     }
