@@ -215,7 +215,7 @@ server {
         self.binder.update()
     	self.binder.populate()
         self.create_folders()
-        self.context.notify('info', 'Writing wellknown config: '+self.nginx_config_dir+self.settings.nginx_config)
+        self.context.notify('info', 'Writing wellknown config: '+self.nginx_config_dir+'/'+self.settings.nginx_config)
         self.write_domain_file()
 
         if not self.has_domains:
