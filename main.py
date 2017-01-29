@@ -179,7 +179,7 @@ server {
 
     def get_certbot_params(self):
         domains = self.read_domain_file()
-        params = ['certbot', 'certonly', '--webroot', '-w', self.settings.wellknown]
+        params = ['certbot', 'certonly', '-n', '--webroot', '-w', self.settings.wellknown]
 
         for domain in domains:
             params.append('-d')
