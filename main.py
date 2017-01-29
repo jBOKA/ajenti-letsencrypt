@@ -106,7 +106,7 @@ class LetsEncryptPlugin (SectionPlugin):
 
         file = open(filepath)
     	with file as f:
-            lines = f.readlines()
+            lines = f.read().splitlines()
 
         return lines
 
