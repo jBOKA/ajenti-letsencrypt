@@ -142,9 +142,10 @@ server {
         filepath = self.nginx_config_dir + '/' + self.settings.nginx_config
         file = open(filepath, 'w')
         src = Template( template )
-        self.context.notify('info', 'Creating wellknown root folder: '+self.settings.wellknown)
         if file.write(src.safe_substitute(dict)) is not None:
             self.context.notify('info', 'WELLKNOWN config write error')
+        else:
+            self.context.notify('info', 'Created wellknown config: '+self.settings.nginx_config)
         file.close()
 
     def create_cron(self):
@@ -198,7 +199,6 @@ server {
         self.binder.update()
     	self.binder.populate()
         self.create_folders()
-        self.context.notify('info', 'Writing wellknown config: '+self.nginx_config_dir+'/'+self.settings.nginx_config)
         self.write_domain_file()
 
         if not self.has_domains:
