@@ -123,8 +123,8 @@ class LetsEncryptPlugin (SectionPlugin):
 
     def create_wellknown(self):
         if not self.check_nginx_custom_dir():
+            self.context.notify('info', 'No nginx custom conf dir')
             return False
-        self.context.notify('info', 'about to')
 
         template = """
 server {
