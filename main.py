@@ -26,7 +26,7 @@ class Settings (object):
           osx='/opt/local/etc/letsencrypt.sh/',
       )
 
-      self.certbot = '/usr/local/bin/certbot'
+      self.settings.certbot = '/usr/local/bin/certbot'
       self.wellknown = '/var/www/letsencrypt.sh/'
       self.domains = 'example.com sub.example.com'
       self.cronjob = False
@@ -107,6 +107,7 @@ class LetsEncryptPlugin (SectionPlugin):
         file = open(filepath)
     	with file as f:
             lines = f.readlines()
+
         return lines
 
     def create_folders(self):
@@ -165,7 +166,7 @@ server {
 
     def create_cron(self):
         file = open(self.crontab_dir + '/' + self.settings.cronfile, 'w')
-        template = "0 0 1 * * " + self.pwd + 'libs/letsencrypt.sh/letsencrypt.sh -c'
+        template = "0 0 1 * * " + self.settings.certbot
         if not file.write(template):
             self.context.notify('info', 'Cron job error')
         file.close()
@@ -191,12 +192,18 @@ server {
                 self.context.notify('error', 'NGINX custom dir write error')
                 return False
 
-    def request_certificates(self):
-        params = [self.pwd + 'libs/letsencrypt.sh/letsencrypt.sh', '-c']
-        if self.find('renewal').value:
-            params.append('--force')
+    def get_certbot_params(self):
+        domains = self.read_domain_file()
+        params = ['certbot','certonly','--webroot','w',self.settings.wellknown]
 
-        p = subprocess.Popen(params, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        for domain in domains:
+            params.append('-d')
+            params.append(domain)
+
+        return params
+
+    def request_certificates(self):
+        p = subprocess.Popen(self.get_certbot_params, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
 
         if out:
