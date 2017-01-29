@@ -123,7 +123,6 @@ class LetsEncryptPlugin (SectionPlugin):
 
     def create_wellknown(self):
         if not self.check_nginx_custom_dir():
-            self.context.notify('info', 'No nginx custom conf dir')
             return False
 
         template = """
@@ -176,6 +175,7 @@ server {
             else:
                 self.context.notify('error', 'NGINX custom dir write error')
                 return False
+        return True
 
     def get_certbot_params(self):
         domains = self.read_domain_file()
