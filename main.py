@@ -179,7 +179,7 @@ server {
 
     def get_certbot_params(self):
         domains = self.read_domain_file()
-        params = ['certbot','certonly','--webroot','w',self.settings.wellknown]
+        params = ['certbot', 'certonly', '--webroot', 'w', self.settings.wellknown]
 
         for domain in domains:
             params.append('-d')
@@ -188,7 +188,7 @@ server {
         return params
 
     def request_certificates(self):
-        p = subprocess.Popen(self.get_certbot_params, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p = subprocess.Popen(self.get_certbot_params(), stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = p.communicate()
 
         if out:
