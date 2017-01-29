@@ -63,7 +63,7 @@ class LetsEncryptPlugin (SectionPlugin):
     def init(self):
         self.title = 'LetsEncrypt'  # those are not class attributes and can be only set in or after init()
         self.icon = 'lock'
-        self.category = 'Security'
+        self.category = 'Web'
 
         """
         UI Inflater searches for the named XML layout and inflates it into
