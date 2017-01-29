@@ -127,7 +127,7 @@ class LetsEncryptPlugin (SectionPlugin):
 
         template = """
 server {
-    server_name $domains;
+    server_name ${domains};
     listen *:80;
     location ^~ ${location} {
         default_type "text/plain";
