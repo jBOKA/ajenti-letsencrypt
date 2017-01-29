@@ -129,15 +129,18 @@ class LetsEncryptPlugin (SectionPlugin):
 server {
     server_name $domains;
     listen *:80;
-    location ^~ ${location}/(.+) {
-        alias $alias;
+    location ^~ ${location} {
         default_type "text/plain";
+        root ${alias};
+    }
+    location = ${location} {
+        return 404;
     }
 }
         """
         dict = {
-            'location': '/.well-known/acme-challenge',
-            'alias': self.settings.wellknown.rstrip('/') + '/.well-known/acme-challenge/',
+            'location': '/.well-known/acme-challenge/',
+            'alias': self.settings.wellknown.rstrip('/'),
             'domains': " ".join(self.read_domain_file())
         }
         filepath = self.nginx_config_dir + '/' + self.settings.nginx_config
