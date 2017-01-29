@@ -202,6 +202,7 @@ server {
         self.write_domain_file()
 
         if not self.has_domains:
+            self.context.notify('info', 'no domains - not creating wellknown')
             return
 
         self.create_wellknown()
