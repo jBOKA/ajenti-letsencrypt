@@ -41,7 +41,7 @@ class LetsEncryptPlugin (SectionPlugin):
     pwd = os.path.join(os.path.dirname(os.path.realpath(__file__)), '')
 
     nginx_config_dir = platform_select(
-        debian='/etc/nginx.custom.d',
+        debian='/etc/nginx/conf.d',
         centos='/etc/nginx.custom.d',
         mageia='/etc/nginx.custom.d',
         freebsd='/usr/local/etc/nginx.custom.d',
