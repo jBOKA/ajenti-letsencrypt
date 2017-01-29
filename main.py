@@ -124,6 +124,7 @@ class LetsEncryptPlugin (SectionPlugin):
     def create_wellknown(self):
         if not self.check_nginx_custom_dir():
             return False
+        self.context.notify('info', 'about to')
 
         template = """
 server {
@@ -204,7 +205,6 @@ server {
         if not self.has_domains:
             return
 
-        self.context.notify('info', 'about to')
         self.create_wellknown()
 
         if self.settings.cronjob:
