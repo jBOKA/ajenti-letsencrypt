@@ -26,7 +26,7 @@ class Settings (object):
           osx='/opt/local/etc/letsencrypt.sh/',
       )
 
-      self.settings.certbot = '/usr/local/bin/certbot'
+      self.certbot = '/usr/local/bin/certbot'
       self.wellknown = '/var/www/letsencrypt.sh/'
       self.domains = 'example.com sub.example.com'
       self.cronjob = False
