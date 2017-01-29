@@ -141,11 +141,11 @@ server {
         }
         filepath = self.nginx_config_dir + '/' + self.settings.nginx_config
         file = open(filepath, 'w')
-        src = Template( template )
+        src = Template(template)
         if file.write(src.safe_substitute(dict)) is not None:
             self.context.notify('info', 'WELLKNOWN config write error')
         else:
-            self.context.notify('info', 'Created wellknown config: '+self.settings.nginx_config)
+            self.context.notify('info', 'Created wellknown config: '+filepath)
         file.close()
 
     def create_cron(self):
