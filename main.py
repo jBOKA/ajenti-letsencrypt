@@ -18,7 +18,7 @@ from pprint import pprint
 class Settings (object):
    def __init__(self):
       self.basedir = platform_select(
-          debian='/etc/ajenti/',
+          debian='/etc/letsencrypt.sh/',
           centos='/etc/letsencrypt.sh/',
           mageia='/etc/letsencrypt.sh/',
           freebsd='/usr/local/etc/letsencrypt.sh/',
