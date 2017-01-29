@@ -136,7 +136,7 @@ server {
         """
         dict = {
             'location': '/.well-known/acme-challenge',
-            'alias': self.settings.wellknown,
+            'alias': self.settings.wellknown.rstrip('/') + '/.well-known/acme-challenge/',
             'domains': " ".join(self.read_domain_file())
         }
         filepath = self.nginx_config_dir + '/' + self.settings.nginx_config
