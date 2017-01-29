@@ -202,9 +202,9 @@ server {
         self.write_domain_file()
 
         if not self.has_domains:
-            self.context.notify('info', 'no domains - not creating wellknown')
             return
 
+        self.context.notify('info', 'about to')
         self.create_wellknown()
 
         if self.settings.cronjob:
